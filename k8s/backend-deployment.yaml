@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: k8s-network-lab:v1
+          imagePullPolicy: IfNotPresent
+          command:
+            - uvicorn
+            - app.backend:app
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8001"
+          ports:
+            - containerPort: 8001
